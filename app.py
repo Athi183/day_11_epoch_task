@@ -16,6 +16,17 @@ from typing import Dict, List, Tuple, Any, Optional
 import gradio as gr
 from dotenv import load_dotenv
 
+# Hugging Face ZeroGPU environment scanner compatibility
+try:
+    import spaces
+
+    @spaces.GPU
+    def _hf_spaces_gpu_initializer():
+        """Dummy GPU function to satisfy Hugging Face ZeroGPU environment startup checks."""
+        pass
+except Exception:
+    pass
+
 # LangChain 0.3.x modern imports with fallback safety
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
