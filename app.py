@@ -16,6 +16,14 @@ from typing import Dict, List, Tuple, Any, Optional
 import gradio as gr
 from dotenv import load_dotenv
 
+# Safe ZeroGPU decorator wrapper
+try:
+    import spaces
+    gpu_dec = spaces.GPU
+except Exception:
+    def gpu_dec(fn):
+        return fn
+
 # LangChain 0.3.x modern imports with fallback safety
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -147,6 +155,7 @@ def build_chain(retriever: VectorStoreRetriever, api_key: str) -> RunnableWithMe
     )
 
 
+@gpu_dec
 def process_pdf(file_obj):
     """Process uploaded PDF: load pages, split into chunks, embed, index in Chroma, and build RAG chain.
 
@@ -242,6 +251,7 @@ def process_pdf(file_obj):
         return f"⚠️ Error processing PDF '{filename}': {str(e)}", []
 
 
+@gpu_dec
 def chat(user_message, history):
     """Process user query through conversational RAG chain and append response to chat history.
 
