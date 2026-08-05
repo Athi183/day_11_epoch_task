@@ -365,25 +365,29 @@ with gr.Blocks(title="📄 PDF Question Answering Assistant", theme=gr.themes.So
     process_btn.click(
         fn=process_pdf,
         inputs=[pdf_file],
-        outputs=[status_output, chatbot]
+        outputs=[status_output, chatbot],
+        api_name=False
     )
 
     send_btn.click(
         fn=chat,
         inputs=[question_input, chatbot],
-        outputs=[question_input, chatbot]
+        outputs=[question_input, chatbot],
+        api_name=False
     )
 
     question_input.submit(
         fn=chat,
         inputs=[question_input, chatbot],
-        outputs=[question_input, chatbot]
+        outputs=[question_input, chatbot],
+        api_name=False
     )
 
     clear_btn.click(
         fn=clear_chat,
         inputs=[],
-        outputs=[chatbot, status_output]
+        outputs=[chatbot, status_output],
+        api_name=False
     )
 
 
