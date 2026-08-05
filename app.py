@@ -147,7 +147,7 @@ def build_chain(retriever: VectorStoreRetriever, api_key: str) -> RunnableWithMe
     )
 
 
-def process_pdf(file_obj: Optional[Any], progress: gr.Progress = gr.Progress()) -> Tuple[str, List[Dict[str, str]]]:
+def process_pdf(file_obj: Optional[Any], progress=gr.Progress()) -> Tuple[str, List[Dict[str, str]]]:
     """Process uploaded PDF: load pages, split into chunks, embed, index in Chroma, and build RAG chain.
 
     Args:
@@ -340,11 +340,17 @@ with gr.Blocks(title="📄 PDF Question Answering Assistant", theme=gr.themes.So
         # Right Panel: Interactive Q&A Chatbot
         with gr.Column(scale=2):
             gr.Markdown("### 💬 2. Contextual Question Answering")
-            chatbot = gr.Chatbot(
-                label="Conversation History",
-                height=450,
-                type="messages"
-            )
+            try:
+                chatbot = gr.Chatbot(
+                    label="Conversation History",
+                    height=450,
+                    type="messages"
+                )
+            except TypeError:
+                chatbot = gr.Chatbot(
+                    label="Conversation History",
+                    height=450
+                )
             question_input = gr.Textbox(
                 label="Ask a question about the uploaded document",
                 placeholder="e.g., What are the key findings or takeaways described in this PDF?",
