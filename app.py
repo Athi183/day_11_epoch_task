@@ -147,15 +147,15 @@ def build_chain(retriever: VectorStoreRetriever, api_key: str) -> RunnableWithMe
     )
 
 
-def process_pdf(file_obj: Optional[Any], progress=gr.Progress()) -> Tuple[str, List[Dict[str, str]]]:
+def process_pdf(file_obj, progress=gr.Progress()):
     """Process uploaded PDF: load pages, split into chunks, embed, index in Chroma, and build RAG chain.
 
     Args:
-        file_obj (Optional[Any]): File object uploaded via Gradio.
-        progress (gr.Progress): Gradio progress tracking reporter.
+        file_obj: File object uploaded via Gradio.
+        progress: Gradio progress tracking reporter.
 
     Returns:
-        Tuple[str, List[Dict[str, str]]]: Status feedback message and cleared chat history.
+        Tuple[str, list]: Status feedback message and cleared chat history.
     """
     global vectorstore, conversational_rag_chain, session_store
 
@@ -242,22 +242,22 @@ def process_pdf(file_obj: Optional[Any], progress=gr.Progress()) -> Tuple[str, L
         return f"⚠️ Error processing PDF '{filename}': {str(e)}", []
 
 
-def chat(user_message: str, history: Optional[List[Dict[str, str]]]) -> Tuple[str, List[Dict[str, str]]]:
+def chat(user_message, history):
     """Process user query through conversational RAG chain and append response to chat history.
 
     Args:
-        user_message (str): Question entered by user.
-        history (Optional[List[Dict[str, str]]]): Current chat history.
+        user_message: Question entered by user.
+        history: Current chat history.
 
     Returns:
-        Tuple[str, List[Dict[str, str]]]: Reset input box text and updated history list.
+        Tuple[str, list]: Reset input box text and updated history list.
     """
     global conversational_rag_chain
 
     if history is None:
         history = []
 
-    if not user_message or not user_message.strip():
+    if not user_message or not str(user_message).strip():
         return "", history
 
     # Error handling: Check if PDF has been processed
@@ -272,7 +272,7 @@ def chat(user_message: str, history: Optional[List[Dict[str, str]]]) -> Tuple[st
     try:
         # Invoke conversational RAG chain with session context
         response = conversational_rag_chain.invoke(
-            {"input": user_message.strip()},
+            {"input": str(user_message).strip()},
             config={"configurable": {"session_id": SESSION_ID}}
         )
         answer = response.get("answer", "I couldn't find that information in the uploaded PDF.")
@@ -290,11 +290,11 @@ def chat(user_message: str, history: Optional[List[Dict[str, str]]]) -> Tuple[st
         return "", history
 
 
-def clear_chat() -> Tuple[List[Dict[str, str]], str]:
+def clear_chat():
     """Reset chat history window and conversation memory store.
 
     Returns:
-        Tuple[List[Dict[str, str]], str]: Empty chat messages list and updated status notice.
+        Tuple[list, str]: Empty chat messages list and updated status notice.
     """
     global session_store
     session_store.clear()
