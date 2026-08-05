@@ -311,7 +311,7 @@ custom_css = """
 .status-box textarea { font-family: monospace; font-size: 0.95rem; font-weight: 500; }
 """
 
-with gr.Blocks(title="📄 PDF Question Answering Assistant") as demo:
+with gr.Blocks(title="📄 PDF Question Answering Assistant", theme=gr.themes.Soft(), css=custom_css) as demo:
     gr.Markdown(
         """
         # 📄 PDF Question Answering Assistant
@@ -342,7 +342,8 @@ with gr.Blocks(title="📄 PDF Question Answering Assistant") as demo:
             gr.Markdown("### 💬 2. Contextual Question Answering")
             chatbot = gr.Chatbot(
                 label="Conversation History",
-                height=450
+                height=450,
+                type="messages"
             )
             question_input = gr.Textbox(
                 label="Ask a question about the uploaded document",
@@ -381,10 +382,5 @@ with gr.Blocks(title="📄 PDF Question Answering Assistant") as demo:
 
 
 if __name__ == "__main__":
-    demo.launch(
-        server_name="0.0.0.0",
-        server_port=7860,
-        share=False,
-        theme=gr.themes.Soft(),
-        css=custom_css
-    )
+    demo.launch()
+
