@@ -147,17 +147,17 @@ def build_chain(retriever: VectorStoreRetriever, api_key: str) -> RunnableWithMe
     )
 
 
-def process_pdf(file_obj, progress=gr.Progress()):
+def process_pdf(file_obj):
     """Process uploaded PDF: load pages, split into chunks, embed, index in Chroma, and build RAG chain.
 
     Args:
         file_obj: File object uploaded via Gradio.
-        progress: Gradio progress tracking reporter.
 
     Returns:
         Tuple[str, list]: Status feedback message and cleared chat history.
     """
     global vectorstore, conversational_rag_chain, session_store
+    progress = gr.Progress()
 
     # 1. Error handling: Check Groq API Key
     groq_api_key = os.getenv("GROQ_API_KEY")

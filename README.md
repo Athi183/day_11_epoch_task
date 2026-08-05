@@ -4,7 +4,7 @@ emoji: 📄
 colorFrom: indigo
 colorTo: blue
 sdk: gradio
-sdk_version: 5.20.0
+sdk_version: 4.44.1
 app_file: app.py
 pinned: false
 ---
@@ -20,7 +20,7 @@ pinned: false
 
 ## 🌟 Project Overview
 
-The **PDF Question Answering Assistant** is a production-ready Retrieval-Augmented Generation (RAG) system that allows users to upload any PDF document and ask unlimited context-grounded questions. The application combines **LangChain 0.3.x**, **ChromaDB**, **HuggingFace Embeddings (`sentence-transformers/all-MiniLM-L6-v2`)**, and **Groq (`llama-3.3-70b-versatile`)** with an interactive **Gradio** web interface.
+The **PDF Question Answering Assistant** is a production-ready, open-source Retrieval-Augmented Generation (RAG) system that allows users to upload any PDF document and ask unlimited context-grounded questions. The application combines **LangChain 0.3.x**, **ChromaDB**, **HuggingFace Embeddings (`sentence-transformers/all-MiniLM-L6-v2`)**, and **Groq (`llama-3.3-70b-versatile`)** with an interactive **Gradio** web interface.
 
 ---
 
@@ -34,7 +34,7 @@ The **PDF Question Answering Assistant** is a production-ready Retrieval-Augment
 - **Strict Non-Hallucination Guardrails**: Powered by Groq's `llama-3.3-70b-versatile` at zero temperature. If context does not contain the answer, returns:
   > *"I couldn't find that information in the uploaded PDF."*
 - **Conversational Memory Lifecycle**: Managed per session using `RunnableWithMessageHistory`. Uploading a new PDF automatically resets memory and rebuilds the vector database.
-- **Hugging Face Spaces Ready**: Pre-configured for seamless deployment on Hugging Face Spaces.
+- **Hugging Face Spaces Ready**: Pre-configured for deployment on Hugging Face Spaces or local servers.
 
 ---
 
@@ -43,7 +43,7 @@ The **PDF Question Answering Assistant** is a production-ready Retrieval-Augment
 | Layer | Technology |
 | :--- | :--- |
 | **Language** | Python 3.10+ |
-| **Web Interface** | Gradio |
+| **Web Interface** | Gradio 6.x / 5.x |
 | **RAG Orchestration** | LangChain 0.3.x (`langchain`, `langchain-core`, `langchain-community`, `langchain-text-splitters`) |
 | **LLM Provider** | Groq API (`llama-3.3-70b-versatile`) |
 | **Embeddings** | HuggingFace (`sentence-transformers/all-MiniLM-L6-v2`) |
@@ -67,12 +67,12 @@ pdf-rag-chatbot/
 
 ---
 
-## ⚙️ Installation & Local Setup
+## ⚙️ Installation
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/Athi183/day_11_epoch_task.git
-   cd day_11_epoch_task
+   git clone https://github.com/your-username/pdf-rag-chatbot.git
+   cd pdf-rag-chatbot
    ```
 
 2. **Create and activate a virtual environment**:
@@ -119,50 +119,14 @@ Open your browser and navigate to: **`http://localhost:7860`**
 
 ---
 
-## 🌐 How to Deploy to Hugging Face Spaces
+## 🌐 Deployment (Hugging Face Spaces)
 
-Deploying this application to **Hugging Face Spaces** takes less than 3 minutes:
-
-### Step 1: Create a New Space on Hugging Face
-1. Log in to [Hugging Face](https://huggingface.co) (or create an account).
-2. Go to **[huggingface.co/new-space](https://huggingface.co/new-space)**.
-3. Fill in the Space details:
-   - **Space Name**: `pdf-rag-assistant` (or your preferred name)
-   - **License**: Choose `mit` or leave default
-   - **Select the Space SDK**: Choose **Gradio**
-   - **Space Hardware**: Choose **CPU basic - Free**
-   - **Visibility**: Public or Private
-4. Click **Create Space**.
-
-### Step 2: Push Your Code to the Hugging Face Space
-You can deploy using Git or directly via the web interface:
-
-#### Option A: Via Git CLI
-```bash
-# Add Hugging Face Space as a remote
-git remote add hf https://huggingface.co/spaces/YOUR_USERNAME/YOUR_SPACE_NAME.git
-
-# Push code to Hugging Face Space
-git push hf main
-```
-
-#### Option B: Drag and Drop Files
-Upload the following files directly in the Space files tab:
-- `app.py`
-- `requirements.txt`
-- `README.md`
-- `.gitignore`
-
-### Step 3: Add Your Groq API Key Secret
-1. Inside your Hugging Face Space, click on **Settings** (top right tab).
-2. Scroll down to **Variables and secrets**.
-3. Click **New secret**.
-4. Set:
-   - **Name**: `GROQ_API_KEY`
-   - **Value**: `gsk_...` (your actual Groq API key)
-5. Click **Save**.
-
-Hugging Face will automatically build the environment, install dependencies from `requirements.txt`, and launch `app.py` on port 7860!
+1. Create a new Space on [Hugging Face Spaces](https://huggingface.co/new-space) using **Gradio** SDK.
+2. Push `app.py`, `requirements.txt`, `README.md`, and `.gitignore` to the Space repository.
+3. In **Settings -> Variables and Secrets**, add a Secret:
+   - **Key**: `GROQ_API_KEY`
+   - **Value**: `gsk_...`
+4. The Space will automatically build and launch!
 
 ---
 
@@ -202,3 +166,5 @@ graph TD
 - **Multi-File PDF Processing**: Support simultaneous uploading and merging of multiple PDFs into a single vector database.
 - **Source Citation & Highlights**: Display page numbers and extracted text snippets alongside answers.
 - **Hybrid Retrieval**: Combine BM25 keyword search with dense vector retrieval for improved accuracy on complex terms.
+
+---
