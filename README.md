@@ -1,8 +1,20 @@
+---
+title: PDF Question Answering Assistant
+emoji: 📄
+colorFrom: indigo
+colorTo: blue
+sdk: gradio
+sdk_version: 5.20.0
+app_file: app.py
+pinned: false
+---
+
 # 📄 PDF Question Answering Assistant (RAG Pipeline)
 
 **Participant Name**: Athira V  
 **MUID**: athirav-3@mulearn  
 **Project Repository**: https://github.com/Athi183/day_11_epoch_task  
+
 
 ---
 
