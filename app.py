@@ -392,5 +392,5 @@ with gr.Blocks(title="📄 PDF Question Answering Assistant", theme=gr.themes.So
 
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(ssr=False)
 
